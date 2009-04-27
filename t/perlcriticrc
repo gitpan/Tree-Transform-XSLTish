@@ -1,0 +1,12 @@
+severity = 1
+theme = core || bug || maintenance || complexity || security
+color = 1
+
+[-Miscellanea::RequireRcsKeywords]
+[-Documentation::RequirePodSections]
+[-ValuesAndExpressions::ProhibitNoisyQuotes]
+[-Subroutines::ProhibitSubroutinePrototypes]
+[-Subroutines::RequireArgUnpacking]
+[-Subroutines::ProtectPrivateSubs]
+[-ControlStructures::ProhibitUnlessBlocks]
+[-CodeLayout::RequireTidyCode]
