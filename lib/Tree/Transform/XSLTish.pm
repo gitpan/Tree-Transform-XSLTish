@@ -6,9 +6,9 @@ use Params::Validate ':all';
 use Tree::Transform::XSLTish::Utils;
 use Tree::Transform::XSLTish::Transformer;
 use Carp::Clan qw(^Tree::Transform::XSLTish);
-use v5.8;
+use 5.006;
 
-our $VERSION='0.1';
+our $VERSION='0.2';
 
 my @DEFAULT_EXPORTS=('tree_rule',
                      'default_rules',

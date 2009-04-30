@@ -8,7 +8,7 @@ use Tree::Transform::XSLTish::Context;
 use Tree::XPathEngine;
 use Carp::Clan qw(^Tree::Transform::XSLTish);
 
-our $VERSION='0.1';
+our $VERSION='0.2';
 
 subtype 'Tree::Transform::XSLTish::Engine'
     => as 'Object'
@@ -237,10 +237,6 @@ the correct C<rules_package> automatically.
 If you don't specify an C<engine>, it will be constructed using the
 class or factory declared in the rules package; if you didn't declare
 anything, it will be an instance of L<Tree::XPathEngine>.
-
-=for comment
-
-engine factories are not inherited!
 
 =head2 C<transform>
 
