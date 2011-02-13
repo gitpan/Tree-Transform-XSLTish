@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Class::MOP;
 
-our $VERSION='0.2';
+our $VERSION='0.3';
 
 my $RULES_NAME='%_tree_transform_rules';
 

@@ -2,7 +2,7 @@ package Tree::Transform::XSLTish::Context;
 use Moose;
 use Carp::Clan qw(^Tree::Transform::XSLTish);
 
-our $VERSION='0.2';
+our $VERSION='0.3';
 
 has 'current_node' => ( is => 'rw', isa => 'Object' );
 has 'node_list' => ( is => 'rw', isa => 'ArrayRef[Object]' );

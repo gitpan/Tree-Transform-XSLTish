@@ -8,7 +8,7 @@ use Tree::Transform::XSLTish::Transformer;
 use Carp::Clan qw(^Tree::Transform::XSLTish);
 use 5.006;
 
-our $VERSION='0.2';
+our $VERSION='0.3';
 
 my @DEFAULT_EXPORTS=('tree_rule',
                      'default_rules',
@@ -242,8 +242,8 @@ This function declares that the
 L<Tree::Transform::XSLTish::Transformer> object returned by L</new>
 should call the passed code-ref to get its engine.
 
-C<engine_class $classname> is equivalent to C<engine_factory {
-$classname->new }>.
+C<engine_class $classname> is equivalent to C<< engine_factory {
+$classname->new } >>.
 
 This function is not exported by default: you have to use the module as:
 

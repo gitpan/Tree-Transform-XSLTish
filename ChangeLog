@@ -1,5 +1,10 @@
 .. -*- mode: rst; coding: utf-8 -*-
 
+0.3 2010-02-13
+  - drop MooseX::AttributeHelpers, use newer Moose instead
+  - Tree::XPathEngine is no longer a hard dependency
+  - minor documentation cleanup
+
 0.2 2009-04-30
   - fixed Perl::Critic tests
   - fixed perl version requirement

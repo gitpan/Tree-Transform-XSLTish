@@ -1,14 +1,11 @@
 package Tree::Transform::XSLTish::Transformer;
 use Moose;
-use MooseX::AttributeHelpers;
 use Moose::Util::TypeConstraints;
-use Params::Validate ':all';
 use Tree::Transform::XSLTish::Utils;
 use Tree::Transform::XSLTish::Context;
-use Tree::XPathEngine;
 use Carp::Clan qw(^Tree::Transform::XSLTish);
 
-our $VERSION='0.2';
+our $VERSION='0.3';
 
 subtype 'Tree::Transform::XSLTish::Engine'
     => as 'Object'
@@ -19,17 +16,18 @@ subtype 'Tree::Transform::XSLTish::Engine'
 has 'rules_package' => (is => 'ro', isa => 'ClassName');
 
 has 'context_stack' => (
-    metaclass => 'Collection::Array',
+    traits => ['Array'],
     is => 'rw',
     isa => 'ArrayRef[Tree::Transform::XSLTish::Context]',
     default => sub { [] },
-    provides => {
-        last => 'context',
-        push => 'enter',
-        pop => 'leave',
-        empty => 'has_context',
+    handles => {
+        enter => 'push',
+        leave => 'pop',
+        has_context => 'count',
     },
 );
+
+sub context { return $_[0]->context_stack->[-1] }
 
 has 'engine' => (
     is => 'ro',
@@ -47,6 +45,7 @@ sub _build_engine {
             return $factory->();
         }
     }
+    require Tree::XPathEngine;
     return Tree::XPathEngine->new();
 }
 
@@ -164,6 +163,8 @@ sub find_rule_by_name_in_package {
     if (exists $rules->{$name}) {
         return $rules->{$name};
     }
+
+    return;
 }
 
 sub rule_matches {
@@ -182,7 +183,7 @@ sub rule_matches {
     my $test_sub= ($node->can('isSameNode'))?
         sub { grep { $node->isSameNode($_) } @_ }
             :
-        sub { grep { "$node" eq "$_" } @_ };
+        sub { grep { $node eq $_ } @_ };
 
     while ($base_node) {
 
@@ -190,6 +191,7 @@ sub rule_matches {
         my @selected_nodes=$self->engine->findnodes($path,$base_node);
         #warn "#  selected: @selected_nodes\n";
         if ($test_sub->(@selected_nodes)) {
+            #warn "ok\n";
             return 1;
         }
 
@@ -295,7 +297,7 @@ L<find_rule_in_package> and returns the first defined result.
 =head2 C<find_rule_in_package>
 
 Gets all the rules having a C<match> attribute, filters those for
-which L<rule_matches> returns true, sorts them priority, and returns
+which L<rule_matches> returns true, sorts them by priority, and returns
 the one with the highest priority.
 
 Dies if there is more than one rule with the highest priority; returns
